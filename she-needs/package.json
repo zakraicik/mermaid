@@ -1,0 +1,27 @@
+{
+  "name": "she-needs",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "npx expo start --tunnel",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0"
+  },
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@react-native-material/core": "^1.3.7",
+    "@react-navigation/bottom-tabs": "^6.5.7",
+    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/stack": "^6.3.16",
+    "expo": "^48.0.4",
+    "react": "18.2.0",
+    "react-native": "0.71.3",
+    "react-native-paper": "^5.2.0",
+    "react-native-sms": "^1.11.0"
+  }
+}
