@@ -29,7 +29,16 @@ export default function NeedsScreen() {
         setTimeout(() => {
             setSelectedItem(null);
             setColor('#FFFFFF');
-        }, 1000);
+        }, 25);
+
+        if (item.label === "SOMETHING\nELSE") {
+            Alert.prompt(
+                'Enter something',
+                'What do you want to do during your alone time?',
+                (text) => console.log('User entered:', text)
+            );
+        }
+
     };
 
     return (
@@ -37,9 +46,9 @@ export default function NeedsScreen() {
             <View style={styles.list}>
                 <FlatList
                     data={itemData}
-                    numColumns={3}
+                    numColumns={2}
                     renderItem={({ item }) => <Item item={item} onPress={() => handlePress(item)} color={selectedItem === item ? color : '#FFFFFF'} />}
-                    keyExtractor={(item) => item.alt}
+                    keyExtractor={(item) => item.label}
                 />
             </View>
         </Background>
@@ -49,13 +58,15 @@ export default function NeedsScreen() {
 const styles = StyleSheet.create({
     list: {
         marginHorizontal: "auto",
-        width: 350,
+        width: 250,
         borderRadius: 10,
+
     },
     item: {
         flex: 1,
-        maxWidth: "33.33%",
+        maxWidth: "50%",
         alignItems: "center",
+        paddingTop: 20
     },
     iconContainer: {
         width: 100,
@@ -64,12 +75,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 8,
+
     },
     label: {
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: "bold",
         textAlign: "center",
-        paddingTop: 8
+        paddingTop: 5
     },
 })
 
@@ -86,5 +98,17 @@ const itemData = [
     {
         label: "WINE",
         icon: <Icon name="glass-wine" size={32} color="#000" />,
+    },
+    {
+        label: "DANCE\nPARTY",
+        icon: <Icon name="human-female-dance" size={32} color="#000" />,
+    },
+    {
+        label: "SEXY\nTIME",
+        icon: <Icon name="cards-heart" size={32} color="#000" />,
+    },
+    {
+        label: "SOMETHING\nELSE",
+        icon: <Icon name="account-search" size={32} color="#000" />,
     },
 ]
