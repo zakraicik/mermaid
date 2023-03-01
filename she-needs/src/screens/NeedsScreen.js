@@ -2,7 +2,7 @@ import * as React from 'react';
 import Background from '../components/Background'
 import { Alert, View, FlatList, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import Header from '../components/Header';
+import { UserData } from '../screens/SettingsScreen';
 import Logo from '../components/Logo'
 
 
@@ -19,7 +19,6 @@ const Item = ({ item, onPress, color }) => {
     );
 };
 
-
 export default function NeedsScreen() {
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [color, setColor] = React.useState('#FFFFFF');
@@ -33,64 +32,65 @@ export default function NeedsScreen() {
             setColor('#FFFFFF');
         }, 30);
 
-        if (item.label === "SOMETHING\nELSE") {
+        if (item.label === 'SOMETHING\nELSE') {
             Alert.prompt(
                 'Enter something',
                 'What do you want to do during your alone time?',
                 (text) => console.log('User entered:', text)
             );
         }
-
     };
 
     return (
-        <Background >
+        <Background>
             <Logo />
             <View style={styles.list}>
                 <FlatList
                     data={itemData}
                     numColumns={2}
-                    renderItem={({ item }) => <Item item={item} onPress={() => handlePress(item)} color={selectedItem === item ? color : '#ffddd2'} />}
+                    renderItem={({ item }) => (
+                        <Item
+                            item={item}
+                            onPress={() => handlePress(item)}
+                            color={selectedItem === item ? color : '#ffddd2'}
+                        />
+                    )}
                     keyExtractor={(item) => item.label}
                 />
             </View>
         </Background>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
     list: {
-        marginHorizontal: "auto",
+        marginHorizontal: 'auto',
         width: 250,
         borderRadius: 10,
-
     },
     item: {
         flex: 1,
-        maxWidth: "50%",
-        alignItems: "center",
+        maxWidth: '50%',
+        alignItems: 'center',
         paddingTop: 20,
-
     },
     iconContainer: {
         width: 100,
         height: 100,
         borderRadius: 70,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
         marginBottom: 8,
-
-
-
     },
     label: {
         fontSize: 12,
-        fontWeight: "bold",
-        textAlign: "center",
+        fontWeight: 'bold',
+        textAlign: 'center',
         paddingTop: 5,
-        color: "#e29578"
+        color: '#e29578',
     },
-})
+});
+
 
 
 const itemData = [
