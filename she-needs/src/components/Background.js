@@ -1,25 +1,20 @@
-import React from 'react'
-import { ImageBackground, StyleSheet, KeyboardAvoidingView } from 'react-native'
+import React from 'react';
+import { View, StyleSheet, KeyboardAvoidingView } from 'react-native';
 
 export default function Background({ children }) {
     return (
-        <ImageBackground
-            source={require('../assets/background_dot.png')}
-            resizeMode="repeat"
-            style={styles.background}
-        >
+        <View style={styles.background}>
             <KeyboardAvoidingView style={styles.container} behavior="padding">
                 {children}
             </KeyboardAvoidingView>
-        </ImageBackground>
-    )
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        width: '100%',
-
+        backgroundColor: '#ffcdb2', // replace with your desired color
     },
     container: {
         flex: 1,
@@ -30,4 +25,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-})
+});

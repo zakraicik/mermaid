@@ -2,6 +2,8 @@ import * as React from 'react';
 import Background from '../components/Background'
 import { Alert, View, FlatList, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import Header from '../components/Header';
+import Logo from '../components/Logo'
 
 
 const Item = ({ item, onPress, color }) => {
@@ -25,11 +27,11 @@ export default function NeedsScreen() {
     const handlePress = (item) => {
         console.log('Button pressed:', item.label);
         setSelectedItem(item);
-        setColor('#ccc');
+        setColor('#ffb4a2');
         setTimeout(() => {
             setSelectedItem(null);
             setColor('#FFFFFF');
-        }, 25);
+        }, 30);
 
         if (item.label === "SOMETHING\nELSE") {
             Alert.prompt(
@@ -42,12 +44,13 @@ export default function NeedsScreen() {
     };
 
     return (
-        <Background>
+        <Background >
+            <Logo />
             <View style={styles.list}>
                 <FlatList
                     data={itemData}
                     numColumns={2}
-                    renderItem={({ item }) => <Item item={item} onPress={() => handlePress(item)} color={selectedItem === item ? color : '#FFFFFF'} />}
+                    renderItem={({ item }) => <Item item={item} onPress={() => handlePress(item)} color={selectedItem === item ? color : '#ffddd2'} />}
                     keyExtractor={(item) => item.label}
                 />
             </View>
@@ -66,7 +69,8 @@ const styles = StyleSheet.create({
         flex: 1,
         maxWidth: "50%",
         alignItems: "center",
-        paddingTop: 20
+        paddingTop: 20,
+
     },
     iconContainer: {
         width: 100,
@@ -75,13 +79,23 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginBottom: 8,
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 3,
+
 
     },
     label: {
         fontSize: 12,
         fontWeight: "bold",
         textAlign: "center",
-        paddingTop: 5
+        paddingTop: 5,
+        color: "#e29578"
     },
 })
 
@@ -89,26 +103,26 @@ const styles = StyleSheet.create({
 const itemData = [
     {
         label: "FOOD",
-        icon: <Icon name="food" size={32} color="#000" />,
+        icon: <Icon name="food" size={32} color="#e29578" />,
     },
     {
         label: "SLEEP",
-        icon: <Icon name="bed" size={32} color="#000" />,
+        icon: <Icon name="bed" size={32} color="#e29578" />,
     },
     {
         label: "WINE",
-        icon: <Icon name="glass-wine" size={32} color="#000" />,
+        icon: <Icon name="glass-wine" size={32} color="#e29578" />,
     },
     {
         label: "DANCE\nPARTY",
-        icon: <Icon name="human-female-dance" size={32} color="#000" />,
+        icon: <Icon name="human-female-dance" size={32} color="#e29578" />,
     },
     {
         label: "SEXY\nTIME",
-        icon: <Icon name="cards-heart" size={32} color="#000" />,
+        icon: <Icon name="cards-heart" size={32} color="#e29578" />,
     },
     {
         label: "SOMETHING\nELSE",
-        icon: <Icon name="account-search" size={32} color="#000" />,
+        icon: <Icon name="account-search" size={32} color="#e29578" />,
     },
 ]

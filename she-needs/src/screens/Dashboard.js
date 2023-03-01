@@ -14,7 +14,9 @@ function MyTabs() {
         <Tab.Navigator
             initialRouteName="Needs"
             screenOptions={{
-                tabBarActiveTintColor: '#e91e63',
+                tabBarActiveTintColor: '#ffcad4',
+                tabBarInactiveTintColor: '#ffddd2',
+                tabBarStyle: { backgroundColor: '#e29578' }
             }}
         >
             <Tab.Screen
@@ -22,6 +24,7 @@ function MyTabs() {
                 component={NeedsScreen}
                 options={{
                     tabBarLabel: 'Needs',
+                    headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="clipboard-list" color={color} size={size} />
                     ),
@@ -32,6 +35,7 @@ function MyTabs() {
                 component={SettingsScreen}
                 options={{
                     tabBarLabel: 'Settings',
+                    headerShown: false,
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="account-settings" color={color} size={size} />
                     ),
