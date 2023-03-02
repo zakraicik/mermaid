@@ -1,9 +1,10 @@
-import * as React from 'react';
-import Background from '../components/Background'
+import React, { useContext, useEffect, useState } from 'react';
 import { Alert, View, FlatList, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { UserData } from '../screens/SettingsScreen';
 import Logo from '../components/Logo'
+import Background from '../components/Background'
+import { UserDataContext } from '../core/UserDataContext';
 
 
 const Item = ({ item, onPress, color }) => {
@@ -19,12 +20,26 @@ const Item = ({ item, onPress, color }) => {
     );
 };
 
+
 export default function NeedsScreen() {
-    const [selectedItem, setSelectedItem] = React.useState(null);
-    const [color, setColor] = React.useState('#FFFFFF');
+    const [selectedItem, setSelectedItem] = useState(null);
+    const [color, setColor] = useState('#FFFFFF');
+    const { userData, setUserData } = useContext(UserDataContext);
+
+    useEffect(() => {
+        AsyncStorage.getItem('userData').then((data) => {
+            if (data !== null) {
+                console.log('Data loaded in sheneeds', { data });
+                setUserData(JSON.parse(data));
+            }
+        });
+    }, [setUserData]);
+
+
 
     const handlePress = (item) => {
         console.log('Button pressed:', item.label);
+        console.log('UserData:', userData.name);
         setSelectedItem(item);
         setColor('#ffb4a2');
         setTimeout(() => {

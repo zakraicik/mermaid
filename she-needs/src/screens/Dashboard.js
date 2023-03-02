@@ -1,11 +1,8 @@
 import React from 'react'
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Alert, View, FlatList, Image, StyleSheet } from 'react-native'
-
-import SettingsScreen from './SettingsScreen'
 import NeedsScreen from './NeedsScreen'
+import SettingsScreen from './SettingsScreen'
 
 const Tab = createBottomTabNavigator();
 
@@ -45,8 +42,11 @@ function MyTabs() {
     );
 }
 
-export default function Dashboard({ navigation }) {
+export default function Dashboard() { //removed { navigation } if this ever becomes an issue. 
+
+
     return (
         <MyTabs />
+
     )
 }

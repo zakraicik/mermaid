@@ -1,31 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { themes } from '../core/theme';
 import Background from '../components/Background';
+import { UserDataContext } from '../core/UserDataContext';
 
 export default function SettingsScreen() {
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [selectedTheme, setSelectedTheme] = useState(themes.find(theme => theme.id === 1) || themes[0]);
 
-    const settings = {
-        name,
-        phone,
-        selectedTheme
-    };
+    const { userData, setUserData } = useContext(UserDataContext);
 
-    useEffect(() => {
-        // Load the saved name, phone number, and theme when the component mounts
-        AsyncStorage.getItem('userData').then((data) => {
-            if (data !== null) {
-                const { name, phone, selectedTheme } = JSON.parse(data);
-                setName(name);
-                setPhone(phone);
-                setSelectedTheme(selectedTheme || themes[0]);
-            }
-        });
-    }, []);
+    const [name, setName] = useState(userData.name || '');
+    const [phone, setPhone] = useState(userData.phone || '');
+    const [selectedTheme, setSelectedTheme] = useState(
+        userData.selectedTheme || themes[0]
+    );
 
     const handleNameChange = (text) => {
         setName(text);
@@ -42,11 +30,11 @@ export default function SettingsScreen() {
         saveUserData();
     };
 
-
     const saveUserData = async () => {
         try {
             const data = JSON.stringify({ name, phone, selectedTheme });
             await AsyncStorage.setItem('userData', data);
+            setUserData({ name, phone, selectedTheme }); // update context with new user data
         } catch (error) {
             console.error(error);
         }
@@ -95,6 +83,7 @@ export default function SettingsScreen() {
         </Background>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {
