@@ -11,9 +11,7 @@ export default function SettingsScreen() {
 
     const [name, setName] = useState(userData.name || '');
     const [phone, setPhone] = useState(userData.phone || '');
-    const [selectedTheme, setSelectedTheme] = useState(
-        userData.selectedTheme || themes[0]
-    );
+
 
     const handleNameChange = (text) => {
         setName(text);
@@ -25,16 +23,11 @@ export default function SettingsScreen() {
         saveUserData();
     };
 
-    const handleThemeChange = (theme) => {
-        setSelectedTheme(theme);
-        saveUserData();
-    };
-
     const saveUserData = async () => {
         try {
-            const data = JSON.stringify({ name, phone, selectedTheme });
+            const data = JSON.stringify({ name, phone });
             await AsyncStorage.setItem('userData', data);
-            setUserData({ name, phone, selectedTheme }); // update context with new user data
+            setUserData({ name, phone }); // update context with new user data
         } catch (error) {
             console.error(error);
         }
@@ -60,24 +53,6 @@ export default function SettingsScreen() {
                         value={phone}
                         placeholder="Enter your phone number"
                     />
-                </View>
-                <View style={styles.item}>
-                    <Text style={styles.label}>SELECT THEME</Text>
-                    <View style={styles.themeContainer}>
-                        {themes.map((theme) => (
-                            <TouchableOpacity
-                                key={theme.id}
-                                style={[
-                                    styles.themeButton,
-                                    selectedTheme && selectedTheme.id === theme.id && styles.selectedThemeButton,
-                                ]}
-                                onPress={() => handleThemeChange(theme)}
-                            >
-                                <View style={[styles.themePreview, { backgroundColor: theme.colors.primary }]} />
-                                <Text style={styles.themeName}>{theme.name}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
                 </View>
             </View>
         </Background>

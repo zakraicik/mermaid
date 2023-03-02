@@ -26,10 +26,10 @@ export default function NeedsScreen() {
     const [color, setColor] = useState('#FFFFFF');
     const { userData, setUserData } = useContext(UserDataContext);
 
+
     useEffect(() => {
         AsyncStorage.getItem('userData').then((data) => {
             if (data !== null) {
-                console.log('Data loaded in sheneeds', { data });
                 setUserData(JSON.parse(data));
             }
         });
@@ -39,7 +39,7 @@ export default function NeedsScreen() {
 
     const handlePress = (item) => {
         console.log('Button pressed:', item.label);
-        console.log('UserData:', userData.name);
+        console.log('UserData:', userData);
         setSelectedItem(item);
         setColor('#ffb4a2');
         setTimeout(() => {
