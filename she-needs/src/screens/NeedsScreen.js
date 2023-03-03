@@ -5,6 +5,7 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import Logo from '../components/Logo'
 import Background from '../components/Background'
 import { UserDataContext } from '../core/UserDataContext';
+import SendSMS from 'react-native-sms';
 
 
 const Item = ({ item, onPress, color }) => {
@@ -26,7 +27,6 @@ export default function NeedsScreen() {
     const [color, setColor] = useState('#FFFFFF');
     const { userData, setUserData } = useContext(UserDataContext);
 
-
     useEffect(() => {
         AsyncStorage.getItem('userData').then((data) => {
             if (data !== null) {
@@ -35,6 +35,25 @@ export default function NeedsScreen() {
         });
     }, [setUserData]);
 
+    const phone = '8605930476';
+
+
+    SendSMS.send(
+        {
+            body: 'test',
+            recipients: [phone],
+            successTypes: ['sent', 'queued'],
+        },
+        (completed, cancelled, error) => {
+            if (completed) {
+                console.log('SMS Sent Completed');
+            } else if (cancelled) {
+                console.log('SMS Sent Cancelled');
+            } else if (error) {
+                console.log('Some error occured');
+            }
+        },
+    );
 
 
     const handlePress = (item) => {
@@ -53,6 +72,8 @@ export default function NeedsScreen() {
                 'What do you want to do during your alone time?',
                 (text) => console.log('User entered:', text)
             );
+        } else {
+            initiateSMS(`I'm feeling ${item.label.toLowerCase()}!`);
         }
     };
 
