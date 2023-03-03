@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useLayoutEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Dashboard, SettingsScreen, NeedsScreen } from './src/screens'
@@ -10,20 +10,34 @@ const Stack = createStackNavigator()
 export default function App() {
   const [userData, setUserData] = React.useState({});
   const [loading, setLoading] = useState(true);
+  const [fadeOut, setFadeOut] = useState(false); // Add a state variable for fading out
 
   function updateUserData(newData) {
     setUserData(newData);
   }
 
-  useEffect(() => {
-    // Wait for 2 seconds and then hide the splash screen
+  useLayoutEffect(() => {
+
+    // Wait for 2 seconds and then start fading out the splash screen
+    setTimeout(() => {
+      setFadeOut(true);
+    }, 4000);
+
+    // Wait for 3.5 seconds and then hide the splash screen
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 3500);
   }, []);
 
   if (loading) {
-    return <SplashScreen />;
+    return (
+      <SplashScreen
+        fadeOut={fadeOut}
+        onAnimationEnd={() => {
+          setFadeOut(false);
+        }}
+      />
+    );
   }
 
   return (
@@ -41,6 +55,5 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </UserDataContext.Provider>
-
-  )
+  );
 }
