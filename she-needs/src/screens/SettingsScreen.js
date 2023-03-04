@@ -15,15 +15,15 @@ export default function SettingsScreen() {
 
     const handleNameChange = (text) => {
         setName(text);
-        saveUserData();
+        saveUserData(text, phone);
     };
 
     const handlePhoneChange = (text) => {
         setPhone(text);
-        saveUserData();
+        saveUserData(name, text);
     };
 
-    const saveUserData = async () => {
+    const saveUserData = async (name, phone) => {
         try {
             const data = JSON.stringify({ name, phone });
             await AsyncStorage.setItem('userData', data);
@@ -74,15 +74,17 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 8,
         color: '#e29578',
+
     },
     input: {
         borderWidth: 1,
         borderColor: '#ffd8be',
         borderRadius: 6,
-        padding: 8,
+        padding: 10,
         fontSize: 16,
         backgroundColor: '#ffddd2',
         color: '#e29578',
+        minWidth: 220
     },
     themeContainer: {
         flexDirection: 'row',

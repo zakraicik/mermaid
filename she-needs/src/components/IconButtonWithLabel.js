@@ -16,7 +16,7 @@ export default function IconButtonWithLabel() {
     return (
         <IconButton classes={{ label: classes.iconButtonLabel }}>
             icon={props => <Icon name="food" {...props} />}
-            <Text>hello</Text>
+
         </IconButton>
     );
 }

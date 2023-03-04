@@ -22,9 +22,16 @@ export const UserDataContext = createContext({
 });
 
 export const UserDataProvider = ({ children }) => {
-    const [userData, setUserDataState] = useState(initialUserData);
+    /**
+     * A higher-order component that provides the UserDataContext to its children.
+     *
+     * @typedef {Object} UserDataProviderProps
+     * @property {ReactNode} children - The components that should be wrapped with the UserDataContext.Provider.
+     * @param {UserDataProviderProps} props - The props for the UserDataProvider component.
+     * @returns {JSX.Element} - A JSX element that wraps the children with the UserDataContext.Provider.
+    */
 
-    log.console(userData)
+    const [userData, setUserDataState] = useState(initialUserData);
 
     const setUserData = (data) => {
         setUserDataState((prevState) => ({

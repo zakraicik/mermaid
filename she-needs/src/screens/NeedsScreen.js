@@ -4,9 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import Logo from '../components/Logo'
 import Background from '../components/Background'
-import { UserDataContext } from '../core/UserDataContext';
-import SendSMS from 'react-native-sms';
-
+import Communications from 'react-native-communications';
+import { UserDataContext } from '../core/UserDataContext';;
+import { validatePhoneNumber } from '../helpers/PhoneValidator'
 
 const Item = ({ item, onPress, color }) => {
     return (
@@ -21,7 +21,6 @@ const Item = ({ item, onPress, color }) => {
     );
 };
 
-
 export default function NeedsScreen() {
     const [selectedItem, setSelectedItem] = useState(null);
     const [color, setColor] = useState('#FFFFFF');
@@ -35,26 +34,7 @@ export default function NeedsScreen() {
         });
     }, [setUserData]);
 
-    const phone = '8605930476';
-
-
-    SendSMS.send(
-        {
-            body: 'test',
-            recipients: [phone],
-            successTypes: ['sent', 'queued'],
-        },
-        (completed, cancelled, error) => {
-            if (completed) {
-                console.log('SMS Sent Completed');
-            } else if (cancelled) {
-                console.log('SMS Sent Cancelled');
-            } else if (error) {
-                console.log('Some error occured');
-            }
-        },
-    );
-
+    const phone = '860-593-0476';
 
     const handlePress = (item) => {
         console.log('Button pressed:', item.label);
@@ -66,14 +46,22 @@ export default function NeedsScreen() {
             setColor('#FFFFFF');
         }, 30);
 
-        if (item.label === 'SOMETHING\nELSE') {
-            Alert.prompt(
-                'Enter something',
-                'What do you want to do during your alone time?',
-                (text) => console.log('User entered:', text)
-            );
+        if (validatePhoneNumber(phone)) {
+
+            if (item.label === 'SOMETHING\nELSE') {
+                Alert.prompt(
+                    'Enter something',
+                    'What do you want to do during your alone time?',
+                    (inputText) => console.log('User entered:', inputText),
+                    Communications.text(phone, `I want ${inputText.toLowerCase()}!`)
+                );
+            } else {
+                Communications.text(phone, `I want ${item.label.replace(/\n/g, ' ').toLowerCase()}!`);
+            }
+
         } else {
-            initiateSMS(`I'm feeling ${item.label.toLowerCase()}!`);
+
+            Alert.alert('Invalid phone number', 'Please enter a valid 10-digit phone number.');
         }
     };
 
